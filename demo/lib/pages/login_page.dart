@@ -1,7 +1,8 @@
 // ignore_for_file: prefer_const_constructors
+
+
 import 'dart:ui';
 
-import 'package:demo/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget
@@ -42,12 +43,11 @@ class LoginPage extends StatelessWidget
                     labelText: "Password",labelStyle: TextStyle(color: Colors.purple)),
                   ),
                   SizedBox(height: 40.0),
-                   ElevatedButton(
+                   ElevatedButton(onPressed: (){
+                     print("Book Buddy welcomes you!");
+                   },
                      child: Text("Login", style: TextStyle(fontSize: 18), ),
                      style: TextButton.styleFrom(minimumSize: Size(100,40)),
-                     onPressed: (){
-                       Navigator.pushNamed(context, MyRoutes.homeRoute);
-                     },
                    ),
                 ],
 
