@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\Java\\Java_1"
+		},
+		{
+			"path": "..\\..\\Data Structures"
+		},
+		{
+			"path": "..\\..\\..\\College\\SEM-3\\Computer Graphics"
+		}
+	],
+	"settings": {
+		"java.project.sourcePaths": [
+			"Expt_2",
+			"Expt_3",
+			"My Programs",
+			"Expt_4",
+			"Practise"
+		],
+		"files.associations": {
+			"GRAPHICS.H": "cpp"
+		}
+	}
+}
