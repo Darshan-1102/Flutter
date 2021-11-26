@@ -7,7 +7,12 @@ class HomePage extends StatelessWidget{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: Text("Book  Buddy"),
+        backgroundColor: Colors.cyanAccent,        //elevation shadow can be turned off by elevation: 0.0
+        iconTheme: IconThemeData(color: Colors.purple),
+        title: Text(
+            "Book  Buddy",
+          style: TextStyle(color: Colors.purple),
+        ),
       ),
         body: Center(
           child: Container(
