@@ -1,22 +1,31 @@
+import 'package:demo/models/catalog.dart';
 import 'package:demo/widgets/drawer.dart';
+import 'package:demo/widgets/item_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget{
   // final String name= "Darshan";
   @override
   Widget build(BuildContext context){
+    final dummyList= List.generate(4, (index) => CatalogueModel.items[0]);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.cyanAccent,        //elevation shadow can be turned off by elevation: 0.0
-        iconTheme: IconThemeData(color: Colors.purple),
-        title: Text(
-            "Book  Buddy",
-          style: TextStyle(color: Colors.purple),
+        title: const Text("Book  Buddy",),
+        titleTextStyle: const TextStyle(
+            color: Colors.black,
+            fontSize: 22,
+          fontWeight: FontWeight.bold
         ),
       ),
-        body: Center(
-          child: Container(
-            child: Text("Welcome to Book Buddy"),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ListView.builder(
+            itemCount: dummyList.length,
+            itemBuilder: (context, index){
+              return ItemWidget(item: dummyList[index] );
+            }
+            ,
+
           ),
         ),
       drawer: MyDrawer(),
