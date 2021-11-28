@@ -2,8 +2,8 @@ import 'package:demo/models/catalog.dart';
 import 'package:flutter/material.dart';
 
 class ItemWidget extends StatelessWidget{
-  final Item item;
-  const ItemWidget({required this.item});
+  Item item;
+  ItemWidget({Key? key, required this.item}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -12,15 +12,15 @@ class ItemWidget extends StatelessWidget{
         onTap: (){
           print(item.name +" is pressed");
         },
-        leading: Image.network(item.image),
+        leading: Image.asset(item.image),
         title: Text(item.name),
         subtitle: Text(item.desc),
         trailing: Text(item.price,
           style: const TextStyle(
             color: Colors.purple,
             fontWeight: FontWeight.bold,
-
-        ),),
+        ),
+        ),
       ),
     );
   }

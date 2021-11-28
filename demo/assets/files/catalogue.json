@@ -1,0 +1,68 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Engineering Mathematics",
+      "desc": "Mathematics Book",
+      "price": "999 ₹",
+      "color": "#33505a",
+      "image": "assets/catalogue_images/eng_mat.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Engineering Physics",
+      "desc": "Physics Book",
+      "price": "999 ₹",
+      "color": "#00ac51",
+      "image": "assets/catalogue_images/eng_phy.jpg"
+    },
+    {
+      "id": 3,
+      "name": "M1 Macbook Air",
+      "desc": "Apple Macbook air with apple silicon",
+      "price": "999 ₹",
+      "color": "#e0bfae",
+      "image": "assets/catalogue_images/eng_chem.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Data Logic And Computer Architecture",
+      "desc": "Logic",
+      "price": "999 ₹",
+      "color": "#544ee4",
+      "image": "assets/catalogue_images/dlcoa.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Engineering Graphics",
+      "desc": "Engineering Drawing",
+      "price": "999 ₹",
+      "color": "#e3e4e9",
+      "image": "assets/catalogue_images/eng_graph.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Let Us C",
+      "desc": "C Language",
+      "price": "999 ₹",
+      "color": "#f73984",
+      "image": "assets/catalogue_images/c.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Computer Graphics",
+      "desc": "Computer Graphics Book",
+      "price": "999 ₹",
+      "color": "#1c1c1c",
+      "image": "assets/catalogue_images/cg.jpg"
+    },
+    {
+      "id": 8,
+      "name": "Complete Java Reference",
+      "desc": "Java Book",
+      "price": "999 ₹",
+      "color": "#7c95eb",
+      "image": "assets/catalogue_images/java.png"
+    }
+  ]
+}
