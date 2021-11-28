@@ -5,38 +5,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class HomePage extends StatefulWidget{
+class HomePage extends StatelessWidget{
   // final String name= "Darshan";
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-
-  @override
-  void initState(){
-    super.initState();
-  }
-  loadData() async{
-    var catalogueJson = await rootBundle.loadString("assets/files/catalogue.json");
-    var decodeData = jsonDecode(catalogueJson);
-    var productsData = decodeData["products"];
-    CatalogueModel.items= List.from(productsData).map((item) => Item.fromMap(item)).cast<Item>().toList();
-  }
 
   @override
   Widget build(BuildContext context){
-    void initState(){
-      super.initState();
-      loadData().whenCompleted((){
-        setState(() {});
-      }
-      );
-    }
     final dummyList= List.generate(4, (index) => CatalogueModel.items[0]);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Book  Buddy",),
+        title: const Text("Book  Buddy"),
         titleTextStyle: const TextStyle(
             color: Colors.black,
             fontSize: 22,
@@ -48,7 +25,7 @@ class _HomePageState extends State<HomePage> {
           child: ListView.builder(
             itemCount: dummyList.length,
             itemBuilder: (context, index){
-              return ItemWidget(item: CatalogueModel.items[index] );
+              return ItemWidget(item: dummyList[index] );
             },
           ),
         ),

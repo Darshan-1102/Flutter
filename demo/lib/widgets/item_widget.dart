@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class ItemWidget extends StatelessWidget{
   Item item;
-  ItemWidget({Key? key, required this.item}) : super(key: key);
+  ItemWidget({Key? key, required this.item }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -12,7 +13,7 @@ class ItemWidget extends StatelessWidget{
         onTap: (){
           print(item.name +" is pressed");
         },
-        leading: Image.asset(item.image),
+        leading: Image.network(item.image),
         title: Text(item.name),
         subtitle: Text(item.desc),
         trailing: Text(item.price,
