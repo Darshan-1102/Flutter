@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    final dummyList= List.generate(4, (index) => CatalogueModel.items[0]);
+    //final dummyList= List.generate(4, (index) => CatalogueModel.items[0]);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Book  Buddy"),
@@ -20,16 +20,61 @@ class HomePage extends StatelessWidget{
           fontWeight: FontWeight.bold
         ),
       ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: ListView.builder(
-            itemCount: dummyList.length,
-            itemBuilder: (context, index){
-              return ItemWidget(item: dummyList[index] );
-            },
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+              ),
+                itemBuilder: (context, index){
+              final item= CatalogueModel.items[index];
+                return Card(
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: GridTile(
+                    header: Container(
+                      child: Text(item.name,
+                      textAlign: TextAlign.center,
+                        style:  const TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      padding: const EdgeInsets.all(12),
+                      decoration: const BoxDecoration(
+                        color: Colors.deepPurple,
+                      ),
+                    ),
+                      child: Image.network(item.image),
+                    footer: Text(item.price,
+                    textAlign: TextAlign.center,),
+                  ),
+                );
+                },
+              itemCount: CatalogueModel.items.length,
+            ),
           ),
         ),
+
       drawer: MyDrawer(),
       );
   }
 }
+
+
+
+// body: Center(
+// child: Padding(
+// padding: const EdgeInsets.all(16.0),
+// child: ListView.builder(
+// itemCount: CatalogueModel.items.length,
+// itemBuilder: (context, index){
+// return ItemWidget(item: CatalogueModel.items[index] );
+// },
+// ),
+// ),
+// ),
