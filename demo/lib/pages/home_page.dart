@@ -1,6 +1,7 @@
 import 'package:demo/models/catalog.dart';
-import 'package:demo/widgets/drawer.dart';
-import 'package:demo/widgets/item_widget.dart';
+import 'package:demo/widgets/home_widgets/catalogue_header.dart';
+import 'package:demo/widgets/home_widgets/catalogue_list.dart';
+
 import 'package:demo/widgets/themes.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -20,8 +21,11 @@ class HomePage extends StatelessWidget{
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              //const CircularProgressIndicator().py16().expand(),
               CatalogueHeader(),
-              CatalogueList().expand(),
+
+              CatalogueList(),py16().expand(),
+
             ],
           ),
         ),
@@ -31,89 +35,13 @@ class HomePage extends StatelessWidget{
   }
 }
 
-class CatalogueHeader extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        "Book Buddy".text.xl5.bold.color(MyTheme.darkBluishColor).make(),
-        "Trending Books".text.xl2.make(),
-      ],
-    );
-  }
-}
 
-class CatalogueList extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-        itemCount: CatalogueModel.items.length,
-        itemBuilder: (context, index){
-          final catalogue= CatalogueModel.items[index];
-          return CatalogueItem(catalogue);
-        }
-    );
-  }
-}
 
-class CatalogueItem extends StatelessWidget{
-  final Item catalogue;
-  const CatalogueItem(this.catalogue);
 
-  @override
-  Widget build(BuildContext context) {
-    return VxBox(
-      child: Row(
-        children: [
-          CatalogueImage(
-              image: catalogue.image
-          ),
-          Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  catalogue.name.text.lg.bold.color(MyTheme.darkBluishColor).make(),
-                  catalogue.desc.text.textStyle(context.captionStyle!).make(),
-                  10.heightBox,
-                  ButtonBar(
-                    alignment: MainAxisAlignment.spaceBetween,
-                    buttonPadding: Vx.mOnly(right: 16),
-                    children: [
-                      catalogue.price.text.bold.xl.make(),
-                      ElevatedButton(
-                          onPressed: (){},
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all(const StadiumBorder()),
-                            backgroundColor: MaterialStateProperty.all(
-                              MyTheme.lightPurpleColor
-                            )
-                          ),
-                          child: "Buy".text.make()
-                      )
-                    ],
-                  )
-                ],
-              )
-          )
-        ],
-      )
-    ).blue50.roundedLg.square(150).make().py20();
-  }
-}
 
-class CatalogueImage extends StatelessWidget{
-  final String image;
 
-  const CatalogueImage({Key? key, required this.image}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Image.network(image).box.p8.color(MyTheme.creamColor).make().p16().w40(context);
-  }
 
-}
+
 
 
 
