@@ -1,20 +1,29 @@
-import 'package:demo/models/catalog.dart';
+
+import 'package:demo/utils/routes.dart';
 import 'package:demo/widgets/home_widgets/catalogue_header.dart';
 import 'package:demo/widgets/home_widgets/catalogue_list.dart';
+import 'package:flutter/cupertino.dart';
 
-import 'package:demo/widgets/themes.dart';
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:velocity_x/velocity_x.dart';
 
 class HomePage extends StatelessWidget{
+  const HomePage({Key? key}) : super(key: key);
+
   // final String name= "Darshan";
 
   @override
   Widget build(BuildContext context){
     //final dummyList= List.generate(4, (index) => CatalogueModel.items[0]);
     return Scaffold(
+      backgroundColor: context.canvasColor,
+      floatingActionButton: FloatingActionButton(
+        onPressed: ()=> Navigator.pushNamed(context, MyRoutes.cartRoute),
+        child: const Icon(CupertinoIcons.cart,
+          color: Colors.white,
+        ),
+      ),
       body: SafeArea(
         child: Container(
           padding: Vx.m32,
@@ -24,7 +33,7 @@ class HomePage extends StatelessWidget{
               //const CircularProgressIndicator().py16().expand(),
               CatalogueHeader(),
 
-              CatalogueList(),py16().expand(),
+              const CatalogueList().expand(),
 
             ],
           ),

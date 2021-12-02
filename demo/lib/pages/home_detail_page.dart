@@ -10,7 +10,9 @@ class HomeDetailsPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: context.canvasColor,
+      ),
       backgroundColor: MyTheme.lightPurple,
       bottomNavigationBar: ButtonBar(
         alignment: MainAxisAlignment.spaceBetween,
@@ -25,8 +27,8 @@ class HomeDetailsPage extends StatelessWidget{
                       MyTheme.lightPurpleColor
                   )
               ),
-              child: "Buy".text.make()
-          )
+              child: "Add to cart".text.make(),
+          ).wh(120,50)
         ],
       ).py32(),
       body: SafeArea(
@@ -35,20 +37,24 @@ class HomeDetailsPage extends StatelessWidget{
           children: [
             Hero(
               tag: Key(catalogue.id.toString()),
-                child: Image.network(catalogue.image),
+                child: Image.asset(catalogue.image),
             ).h32(context),
             Expanded(
                 child: VxArc(
-                  height: 30,
+                  height: 40,
                   arcType: VxArcType.CONVEY,
+                  edge: VxEdge.TOP,
                   child: Container(
+                    padding: const EdgeInsets.all(5),
                     width: context.screenWidth,
-                    color: MyTheme.greenshadeColor,
+                    color: context.cardColor,
                     child: Column(
-                                children: [
-                                  catalogue.name.text.xl4.bold.color(MyTheme.darkBluishColor).make(),
-                                  catalogue.desc.text.textStyle(context.captionStyle!).xl.make(),
-                                  10.heightBox,
+                      children: [
+                        //expand(),
+                        catalogue.name.text.xl4.bold.color(MyTheme.darkBluishColor).make(),
+                        catalogue.desc.text.textStyle(context.captionStyle!).lg.make(),
+                        10.heightBox,
+                        "This is the latest Engineering mathematics textbook that you require".text.make(),
                     ],
                     ).py64(),
 

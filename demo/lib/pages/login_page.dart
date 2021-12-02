@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:demo/utils/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:velocity_x/src/extensions/context_ext.dart';
 
 class LoginPage extends StatefulWidget
 {
@@ -32,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
   {
     return Material
     (
-      color: Colors.white,
+      color: context.canvasColor,
       child:SingleChildScrollView(
         child: Form(
           key: _formkey,

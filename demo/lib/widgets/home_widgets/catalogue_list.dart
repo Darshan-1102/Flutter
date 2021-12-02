@@ -5,9 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'catalogue_image.dart';
-import 'package:demo/utils/routes.dart';
+
 
 class CatalogueList extends StatelessWidget{
+  const CatalogueList({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -62,7 +64,7 @@ class CatalogueItem extends StatelessWidget{
                                     MyTheme.lightPurpleColor
                                 )
                             ),
-                            child: "Buy".text.make()
+                            child: "Add to cart".text.make()
                         )
                       ],
                     )
@@ -71,6 +73,6 @@ class CatalogueItem extends StatelessWidget{
             )
           ],
         )
-    ).blue50.roundedLg.square(150).make().py20();
+    ).color(context.cardColor).roundedLg.square(150).make().py20();
   }
 }
