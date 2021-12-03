@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class CatalogueModel{
-  static final catModel= CatalogueModel._internal();
 
-  CatalogueModel._internal();
-  factory CatalogueModel()=> catModel;
   Item getById(int id)=> items.firstWhere((element) => element.id==id); // get item by id
 
   Item getByPosition(int pos) => items[pos];  //get by position

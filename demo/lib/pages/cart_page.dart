@@ -1,4 +1,5 @@
 import 'package:demo/models/cart.dart';
+import 'package:demo/store/store.dart';
 import 'package:demo/widgets/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -27,9 +28,9 @@ class CartPage extends StatelessWidget{
 }
 
 class _CartTotal extends StatelessWidget{
-  final _cart = CartModel();
   @override
   Widget build(BuildContext context) {
+    final CartModel _cart = (VxState.store as MyStore).cart;
     return SizedBox(
       height: 200,
         child: Row(
@@ -55,16 +56,13 @@ class _CartTotal extends StatelessWidget{
   }
 }
 
-class _CartList extends StatefulWidget{
-  @override
-  State<_CartList> createState() => _CartListState();
-}
-class _CartListState extends State<_CartList>{
-  final _cart = CartModel();
+class _CartList extends StatelessWidget{
+
   @override
   Widget build(BuildContext context) {
+    final CartModel _cart= (VxState.store as MyStore).cart;
     return _cart.items.isEmpty ? "Nothing to show".text.xl3.makeCentered(): ListView.builder(
-        itemCount: 2,       //this was causing an error
+        itemCount: _cart.items.length,       //this was causing an error
       itemBuilder: (context, index)=> ListTile(
         leading: const Icon(Icons.done),
         trailing: IconButton(
