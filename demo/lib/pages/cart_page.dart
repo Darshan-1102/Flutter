@@ -63,13 +63,15 @@ class _CartListState extends State<_CartList>{
   final _cart = CartModel();
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return _cart.items.isEmpty ? "Nothing to show".text.xl3.makeCentered(): ListView.builder(
         itemCount: 2,       //this was causing an error
       itemBuilder: (context, index)=> ListTile(
         leading: const Icon(Icons.done),
         trailing: IconButton(
           icon: const Icon(Icons.remove_circle_outline),
-          onPressed: () {  },
+          onPressed: () {
+            _cart.remove(_cart.items[index]);
+          },
         ),
         title: Text(_cart.items[index].name),
       ),
