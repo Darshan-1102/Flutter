@@ -1,3 +1,4 @@
+import 'package:demo/models/cart.dart';
 import 'package:demo/models/catalog.dart';
 import 'package:demo/pages/home_detail_page.dart';
 import 'package:demo/widgets/themes.dart';
@@ -29,8 +30,8 @@ class CatalogueList extends StatelessWidget{
   }
 }
 class CatalogueItem extends StatelessWidget{
-  final Item catalogue;
-  const CatalogueItem(this.catalogue);
+  final Item catalog;
+  const CatalogueItem(this.catalog);
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +39,9 @@ class CatalogueItem extends StatelessWidget{
         child: Row(
           children: [
             Hero(
-              tag: Key(catalogue.id.toString()),
+              tag: Key(catalog.id.toString()),
               child: CatalogueImage(
-                  image: catalogue.image
+                  image: catalog.image
               ),
             ),
             Expanded(
@@ -48,24 +49,15 @@ class CatalogueItem extends StatelessWidget{
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    catalogue.name.text.lg.bold.color(MyTheme.darkBluishColor).make(),
-                    catalogue.desc.text.textStyle(context.captionStyle!).make(),
+                    catalog.name.text.lg.bold.color(MyTheme.darkBluishColor).make(),
+                    catalog.desc.text.textStyle(context.captionStyle!).make(),
                     10.heightBox,
                     ButtonBar(
                       alignment: MainAxisAlignment.spaceBetween,
                       buttonPadding: Vx.mOnly(right: 16),
                       children: [
-                        catalogue.price.text.bold.xl.make(),
-                        ElevatedButton(
-                            onPressed: (){},
-                            style: ButtonStyle(
-                                shape: MaterialStateProperty.all(const StadiumBorder()),
-                                backgroundColor: MaterialStateProperty.all(
-                                    MyTheme.lightPurpleColor
-                                )
-                            ),
-                            child: "Add to cart".text.make()
-                        )
+                        catalog.price.text.bold.xl.make(),
+                        _AddToCart(catalog, catalog: catalog,)
                       ],
                     )
                   ],
@@ -74,5 +66,39 @@ class CatalogueItem extends StatelessWidget{
           ],
         )
     ).color(context.cardColor).roundedLg.square(150).make().py20();
+  }
+}
+
+class _AddToCart extends StatefulWidget {
+  final Item catalog;
+  const _AddToCart(Item catalogue, {
+    Key? key, required this.catalog,
+  }) : super(key: key);
+
+  @override
+  State<_AddToCart> createState() => _AddToCartState();
+}
+
+class _AddToCartState extends State<_AddToCart> {
+  bool isAdded = false;
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: (){
+          isAdded= isAdded.toggle();
+          final catalog= CatalogueModel();
+          final _cart = CartModel();
+          _cart.catalog = catalog;
+          _cart.add(widget.catalog);
+          setState(() {});
+        },
+        style: ButtonStyle(
+            shape: MaterialStateProperty.all(const StadiumBorder()),
+            backgroundColor: MaterialStateProperty.all(
+                MyTheme.lightPurpleColor
+            )
+        ),
+        child: isAdded ? const Icon(Icons.done): "Add to cart".text.make()
+    );
   }
 }
