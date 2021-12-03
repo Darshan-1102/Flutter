@@ -1,4 +1,6 @@
 
+import 'package:demo/models/cart.dart';
+import 'package:demo/store/store.dart';
 import 'package:demo/utils/routes.dart';
 import 'package:demo/widgets/home_widgets/catalogue_header.dart';
 import 'package:demo/widgets/home_widgets/catalogue_list.dart';
@@ -15,13 +17,20 @@ class HomePage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
+    final _cart = (VxState.store as MyStore).cart;
     //final dummyList= List.generate(4, (index) => CatalogueModel.items[0]);
     return Scaffold(
       backgroundColor: context.canvasColor,
-      floatingActionButton: FloatingActionButton(
-        onPressed: ()=> Navigator.pushNamed(context, MyRoutes.cartRoute),
-        child: const Icon(CupertinoIcons.cart,
-          color: Colors.white,
+      floatingActionButton: VxBuilder(
+        mutations: const {AddMutation, RemoveMutation},
+        builder: (context,dynamic, _)=>FloatingActionButton(
+          onPressed: ()=> Navigator.pushNamed(context, MyRoutes.cartRoute),
+          child: const Icon(CupertinoIcons.cart,
+            color: Colors.white,
+          ),
+        ).badge(color: Vx.red400, size: 20,
+            count: _cart.items.length,
+          textStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)
         ),
       ),
       body: SafeArea(
