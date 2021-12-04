@@ -30,6 +30,46 @@ class CatalogueModel{
          "#33505a",
          "assets/catalogue_images/eng_chem.jpg"
      ),
+     Item(
+         4,
+         "Engineering Graphics",
+         "Drawing Textbook",
+         295 ,
+         "#33505a",
+         "assets/catalogue_images/eng_graph.jpg"
+     ),
+     Item(
+         5,
+         "Let Us C",
+         "C Programming",
+         160 ,
+         "#33505a",
+         "assets/catalogue_images/c.jpg"
+     ),
+     Item(
+         6,
+         "Computer Graphics",
+         "Graphics",
+         320,
+         "#33505a",
+         "assets/catalogue_images/cg.jpg"
+     ),
+     Item(
+         7,
+         "Java Complete Reference",
+         "Java",
+         899 ,
+         "#33505a",
+         "assets/catalogue_images/java.png"
+     ),
+     Item(
+         8,
+         "Data Logic and Computer Architecture",
+         "DLCOA",
+         799 ,
+         "#33505a",
+         "assets/catalogue_images/dlcoa.jpg"
+     ),
    ];
 }
 

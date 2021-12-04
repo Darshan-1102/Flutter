@@ -1,7 +1,7 @@
-
 import 'package:demo/models/cart.dart';
 import 'package:demo/store/store.dart';
 import 'package:demo/utils/routes.dart';
+import 'package:demo/widgets/drawer.dart';
 import 'package:demo/widgets/home_widgets/catalogue_header.dart';
 import 'package:demo/widgets/home_widgets/catalogue_list.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget{
           ),
         ),
       ),
-
+      drawer: MyDrawer(),
     );
   }
 }

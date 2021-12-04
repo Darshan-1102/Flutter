@@ -9,7 +9,7 @@ import 'pages/home_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main(){
-  runApp(VxState(
+  runApp(VxState(                 //setPathUrlStrategy(); for web
       store: MyStore(),
     child: MyApp()
 
@@ -24,12 +24,12 @@ class MyApp extends StatelessWidget {
       theme: MyTheme.lightTheme(context),
       darkTheme: MyTheme.darkTheme(context),
       debugShowCheckedModeBanner: false,
-      initialRoute: MyRoutes.homeRoute,
+      initialRoute: MyRoutes.loginRoute,
       routes: {
-        "/": (context) => LoginPage(),
+        "/": (context) => HomePage(),
         MyRoutes.homeRoute: (context) => const HomePage(),
         MyRoutes.loginRoute: (context) => LoginPage(),
-        MyRoutes.cartRoute: (context) => CartPage(),
+        MyRoutes.cartRoute: (context) => const CartPage(),
       },
     );
   }
