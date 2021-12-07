@@ -1,14 +1,18 @@
 import 'package:demo/pages/cart_page.dart';
 import 'package:demo/pages/login_page.dart';
+import 'package:demo/pages/login_screen.dart';
 import 'package:demo/store/store.dart';
 import 'package:demo/utils/routes.dart';
 import 'package:demo/widgets/themes.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'pages/home_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main(){
+void main() {
+  //WidgetsFlutterBinding.ensureInitialized();
+  //await Firebase.initializeApp();
   runApp(VxState(                 //setPathUrlStrategy(); for web
       store: MyStore(),
     child: MyApp()
@@ -17,8 +21,10 @@ void main(){
 }
 
 class MyApp extends StatelessWidget {
+  //final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   @override
   Widget build(BuildContext context){
+
     return MaterialApp(
       themeMode: ThemeMode.system,
       theme: MyTheme.lightTheme(context),
@@ -26,10 +32,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: MyRoutes.loginRoute,
       routes: {
-        "/": (context) => HomePage(),
+        "/": (context) => const HomePage(),
         MyRoutes.homeRoute: (context) => const HomePage(),
         MyRoutes.loginRoute: (context) => LoginPage(),
         MyRoutes.cartRoute: (context) => const CartPage(),
+        //MyRoutes.loginScreen: (context)=> const LoginScreen(),
       },
     );
   }

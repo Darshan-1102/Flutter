@@ -45,9 +45,9 @@ class HomeDetailsPage extends StatelessWidget{
                       children: [
                         //expand(),
                         catalogue.name.text.xl4.bold.color(MyTheme.darkBluishColor).make(),
-                        catalogue.desc.text.textStyle(context.captionStyle!).lg.make(),
+                        catalogue.desc.text.center.textStyle(context.captionStyle!).lg.make(),
                         10.heightBox,
-                        "This is the latest Engineering mathematics textbook that you require".text.make(),
+                        "This book is used only for 1 year".text.center.make(),
                     ],
                     ).py64(),
 
