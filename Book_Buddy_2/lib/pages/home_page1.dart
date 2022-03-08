@@ -17,14 +17,14 @@ class HomePage1 extends StatefulWidget{
   @override
   State<HomePage1> createState() => _HomePage1State();
 }
-// late Product cdata;
-// late Product javadata;
-// late Product cgdata;
-// late Product dlcoadata;
-// late Product osdata;
-// late Product eddata;
-// late Product dbmsdata;
-// late Product cndata;
+late Product cdata;
+late Product javadata;
+late Product cgdata;
+late Product dlcoadata;
+late Product osdata;
+late Product eddata;
+late Product dbmsdata;
+late Product cndata;
 
 
 late CategoryProvider provider;
@@ -226,7 +226,8 @@ class _HomePage1State extends State<HomePage1> {
   }
   Widget _buildFeature(){
     List<Product> featureProduct= productProvider.getfeatureList;
-    if(featureProduct.length>1) {
+    List<Product> homeFeatureProduct= productProvider.getHomeFeatureList;
+
       return Column(
         children: [
           Row(
@@ -249,83 +250,63 @@ class _HomePage1State extends State<HomePage1> {
 
           ),
           Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                          builder: (ctx) =>
-                              DetailPage1(
-                                  image: featureProduct
-                                      .elementAt(1)
-                                      .image,
-                                  name: featureProduct
-                                      .elementAt(1)
-                                      .name,
-                                  price: featureProduct
-                                      .elementAt(1)
-                                      .price
+            children: homeFeatureProduct.map<Widget>((e) {
+              return Expanded(
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (ctx) =>
+                                      DetailPage1(
+                                          image: e.image,
+                                          name: e.name,
+                                          price: e.price
+                                      )
                               )
-                      )
-                  );
-                },
-                child: SingleProduct(
-                    price: featureProduct
-                        .elementAt(1)
-                        .price,
-                    name: featureProduct
-                        .elementAt(1)
-                        .name,
-                    image: featureProduct
-                        .elementAt(1)
-                        .image
+                          );
+                        },
+                        child: SingleProduct(
+                            price: e.price,
+                            name: e.name,
+                            image: e.image
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                                builder: (ctx) =>
+                                    DetailPage1(
+                                        image: e.image,
+                                        name: e.name,
+                                        price: e.price
+                                    )
+                            )
+                        );
+                      },
+                      child: SingleProduct(
+                          price: e.price,
+                          name: e.name,
+                          image: e.image
+                      ),
+                    ),
+
+                  ],
                 ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                          builder: (ctx) =>
-                              DetailPage1(
-                                  image: featureProduct
-                                      .elementAt(2)
-                                      .image,
-                                  name: featureProduct
-                                      .elementAt(2)
-                                      .name,
-                                  price: featureProduct
-                                      .elementAt(2)
-                                      .price
-                              )
-                      )
-                  );
-                },
-                child: SingleProduct(
-                    price: featureProduct
-                        .elementAt(2)
-                        .price,
-                    name: featureProduct
-                        .elementAt(2)
-                        .name,
-                    image: featureProduct
-                        .elementAt(2)
-                        .image
-                ),
-              ),
-            ],
+              );
+            }).toList()
+
           ),
         ],
       );
-    }
-    else {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
   }
   Widget _buildNewArchives(){
     List<Product> newArchivesProduct= productProvider.getnewArchivesList;
-    if(newArchivesProduct.length>1) {
+
       return Column(
         children: [
           Container(
@@ -354,77 +335,56 @@ class _HomePage1State extends State<HomePage1> {
             ),
           ),
           Row(
-            children: [
-              GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                            builder: (ctx) =>
-                                DetailPage1(
-                                    image: newArchivesProduct
-                                        .elementAt(0)
-                                        .image,
-                                    name: newArchivesProduct
-                                        .elementAt(0)
-                                        .name,
-                                    price: newArchivesProduct
-                                        .elementAt(0)
-                                        .price
-                                )));
-                  },
-                  child: SingleProduct(
-                    price: newArchivesProduct
-                        .elementAt(0)
-                        .price,
-                    name: newArchivesProduct
-                        .elementAt(0)
-                        .name,
-                    image: newArchivesProduct
-                        .elementAt(0)
-                        .image,
-                  )
-              ),
-              GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                            builder: (ctx) =>
-                                DetailPage1(
-                                    image: newArchivesProduct
-                                        .elementAt(1)
-                                        .image,
-                                    name: newArchivesProduct
-                                        .elementAt(1)
-                                        .name,
-                                    price: newArchivesProduct
-                                        .elementAt(1)
-                                        .price
-                                )
+            children: productProvider.gethomeArchivesList.map<Widget>((e) {
+              return Expanded(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (ctx) =>
+                                        DetailPage1(
+                                            image: e.image,
+                                            name: e.name,
+                                            price: e.price
+                                        )));
+                          },
+                          child: SingleProduct(
+                            price: e.price,
+                            name: e.name,
+                            image: e.image,
+                          )
+                      ),
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (ctx) =>
+                                      DetailPage1(
+                                          image: e.image,
+                                          name: e.name,
+                                          price: e.price
+                                      )
+                              )
+                          );
+                        },
+                        child: SingleProduct(
+                            price: e.price,
+                            name: e.name,
+                            image: e.image
                         )
-                    );
-                  },
-                  child: SingleProduct(
-                      price: newArchivesProduct
-                          .elementAt(1)
-                          .price,
-                      name: newArchivesProduct
-                          .elementAt(1)
-                          .name,
-                      image: newArchivesProduct
-                          .elementAt(1)
-                          .image
-                  )
-              ),
-            ],
+                    ),
+                  ],
+                ),
+              );
+            }).toList()
+
           )
         ],
       );
-    }
-    else{
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
   }
 
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
@@ -440,6 +400,8 @@ class _HomePage1State extends State<HomePage1> {
     productProvider= Provider.of<ProductProvider>(context);
     productProvider.getfeaturedata();
     productProvider.getnewArchivesdata();
+    productProvider.getHomeFeaturedata();
+    productProvider.gethomeArchivesdata();
 
     return Scaffold(
       key: _key,

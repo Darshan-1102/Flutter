@@ -31,9 +31,11 @@ class CategoryProvider with ChangeNotifier{
       },
     );
     firstyear=newList;
+    notifyListeners();
   }
     List<Product> get getfirstyearList{
       return firstyear;
+
     }
 
     //Second year
@@ -53,6 +55,7 @@ class CategoryProvider with ChangeNotifier{
       },
     );
       secondyear=newList;
+    notifyListeners();
     }
         List<Product> get getsecondyearList{
           return secondyear;
@@ -76,6 +79,7 @@ class CategoryProvider with ChangeNotifier{
     },
     );
     thirdyear=newList;
+    notifyListeners();
   }
   List<Product> get getthirdyearList{
     return thirdyear;
@@ -98,6 +102,7 @@ class CategoryProvider with ChangeNotifier{
     },
     );
     fourthyear=newList;
+    notifyListeners();
   }
   List<Product> get getfourthyearList{
     return fourthyear;
