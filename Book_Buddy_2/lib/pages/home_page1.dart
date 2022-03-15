@@ -1,16 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:demo/models/categoryicons.dart';
 import 'package:demo/provider/categoty_provider.dart';
 import 'package:demo/provider/product_provider.dart';
+import 'package:demo/screens/cartpage1.dart';
 import 'package:demo/screens/detailpage1.dart';
 import 'package:demo/screens/listproduct.dart';
+import 'package:demo/screens/profilescreen.dart';
 import 'package:demo/screens/singleproduct.dart';
+import 'package:demo/widgets/notification_button.dart';
 import 'package:demo/widgets/themes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:provider/provider.dart';
+import '../models/user_model.dart';
 import '../store/product.dart';
+import '../widgets/notification_button.dart';
+import '../screens/profilescreen.dart';
+
 
 class HomePage1 extends StatefulWidget{
 
@@ -36,9 +44,11 @@ var firstyear;
 var secondYear;
 var thirdYear;
 var fourthYear;
+var icon;
 
 
 class _HomePage1State extends State<HomePage1> {
+
 
   Widget _buildCategoryProduct(String image){
     return CircleAvatar(maxRadius: 45,
@@ -46,33 +56,48 @@ class _HomePage1State extends State<HomePage1> {
       child: Container(
         height: 45,
         child: Image(
-        image: AssetImage(image),
+        image: NetworkImage(image),
       ),
     )
     );
   }
 
+
   bool homeColor= true;
   bool cartColor= false;
   bool aboutColor= false;
   bool contactColor= false;
+  bool profileColor= false;
+
+  Widget _buildUserAccountsDrawerHeader(){
+    List<UserModel> userModal= productProvider.getUserModalList;
+    return Column(
+      children: userModal.map<Widget>((e) {
+        return UserAccountsDrawerHeader(
+            currentAccountPicture: CircleAvatar(
+              radius: 20,
+              backgroundImage: e.userImage==null ?const AssetImage("assets/images/user.png")
+              : NetworkImage(e.userImage.toString()) as ImageProvider,
+              backgroundColor: Colors.white,
+            ),
+            decoration: const BoxDecoration(
+              color: Colors.lightBlueAccent,
+            ),
+            accountName: Text(e.firstName.toString(),
+                style: const TextStyle(color: Colors.black)),
+            accountEmail: Text(e.email.toString(),
+                style: const TextStyle(color: Colors.black))
+        );
+      }).toList(),
+    );
+  }
+
 
   Widget _buildMyDrawer(){
     return Drawer(
       child: ListView(
         children:  [
-          const UserAccountsDrawerHeader(
-              currentAccountPicture: CircleAvatar(
-                radius: 20,
-                backgroundImage: AssetImage("assets/images/user.png"),
-                backgroundColor: Colors.white,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.lightBlueAccent,
-              ),
-              accountName: Text("Darshan", style: TextStyle(color: Colors.black)),
-              accountEmail: Text("abc@gmail.com", style: TextStyle(color: Colors.black))
-          ),
+          _buildUserAccountsDrawerHeader(),
           ListTile(
             selected: homeColor,
             onTap: (){
@@ -81,6 +106,7 @@ class _HomePage1State extends State<HomePage1> {
                 contactColor=false;
                 cartColor=false;
                 aboutColor=false;
+                profileColor=false;
               });
             },
             leading: const Icon(Icons.home),
@@ -94,19 +120,43 @@ class _HomePage1State extends State<HomePage1> {
                 contactColor=false;
                 homeColor=false;
                 aboutColor=false;
+                profileColor=false;
               });
             },
             leading: const Icon(Icons.shopping_cart),
-            title: const Text("Cart"),
+            title: GestureDetector(
+              onTap: (){
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=> CartPage1()));
+              },
+                child: Text("Cart")
+            ),
+          ),
+          ListTile(
+            selected: profileColor,
+            onTap: (){
+
+              setState(() {
+                aboutColor=false;
+                contactColor=false;
+                cartColor=false;
+                homeColor=false;
+                profileColor=true;
+              });
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>ProfileScreen()));
+            },
+            leading: const Icon(Icons.info),
+            title: const Text("Profile"),
           ),
           ListTile(
             selected: aboutColor,
             onTap: (){
+
               setState(() {
                 aboutColor=true;
                 contactColor=false;
                 cartColor=false;
                 homeColor=false;
+                profileColor=false;
               });
             },
             leading: const Icon(Icons.info),
@@ -120,6 +170,7 @@ class _HomePage1State extends State<HomePage1> {
                 homeColor=false;
                 cartColor=false;
                 aboutColor=false;
+                profileColor=false;
               });
             },
             leading: const Icon(Icons.phone),
@@ -152,11 +203,89 @@ class _HomePage1State extends State<HomePage1> {
       ),
     );
   }
-  Widget _buildCategory(BuildContext context){
+  Widget _buildFirstYearIcon(){
+    List<CategoryIcon> firstyearIcon= provider.getfirstyearIcon;
     List<Product> firstyear= provider.getfirstyearList;
+
+    return Row(
+      children: firstyearIcon.map<Widget>((e)  {
+        return GestureDetector(
+          child: _buildCategoryProduct(e.image),
+          onTap: (){
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (ctx)=>ListProduct(name: "First Year",
+                  snapShot: firstyear,
+                ),
+                )
+            );
+          },
+        );
+      }).toList(),
+    );
+  }
+  Widget _buildSecondYearIcon(){
+    List<CategoryIcon> secondyearIcon= provider.getsecondyearIcon;
     List<Product> secondyear= provider.getsecondyearList;
+
+    return Row(
+      children: secondyearIcon.map<Widget>((e)  {
+        return GestureDetector(
+          child: _buildCategoryProduct(e.image),
+          onTap: (){
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (ctx)=>ListProduct(name: "Second Year",
+                  snapShot: secondyear,
+                ),
+                )
+            );
+          },
+        );
+      }).toList(),
+    );
+  }
+  Widget _buildThirdYearIcon(){
+    List<CategoryIcon> thirdyearIcon= provider.getthirdyearIcon;
     List<Product> thirdyear= provider.getthirdyearList;
+
+    return Row(
+      children: thirdyearIcon.map<Widget>((e)  {
+        return GestureDetector(
+          child: _buildCategoryProduct(e.image),
+          onTap: (){
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (ctx)=>ListProduct(name: "Third Year",
+                  snapShot: thirdyear,
+                ),
+                )
+            );
+          },
+        );
+      }).toList(),
+    );
+  }
+  Widget _buildFourthYearIcon(){
+    List<CategoryIcon> fourthyearIcon= provider.getfourthyearIcon;
     List<Product> fourthyear= provider.getfourthyearList;
+
+    return Row(
+      children: fourthyearIcon.map<Widget>((e)  {
+        return GestureDetector(
+          child: _buildCategoryProduct(e.image),
+          onTap: (){
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (ctx)=>ListProduct(name: "Fourth Year",
+                  snapShot: fourthyear,
+                ),
+                )
+            );
+          },
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _buildCategory(){
+
     return Column(
       children: [
       Container(
@@ -172,52 +301,11 @@ class _HomePage1State extends State<HomePage1> {
       Container(
             height: 70,
             child: Row(
-            children: [
-              GestureDetector(
-                  child: _buildCategoryProduct("assets/images/books.png"),
-                  onTap: (){
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (ctx)=>ListProduct(name: "First Year",
-                                snapShot: firstyear,
-                        ),
-                      )
-                  );
-                },
-              ),
-              GestureDetector(
-                  child: _buildCategoryProduct("assets/images/books.png",),
-                    onTap: (){
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (ctx)=>ListProduct(name: "Second Year",
-                            snapShot: secondyear,
-                          ),
-                          )
-                      );
-                    },
-
-              ),
-              GestureDetector(
-                  child: _buildCategoryProduct("assets/images/novel.png"),
-                onTap: (){
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (ctx)=>ListProduct(name: "Third Year",
-                        snapShot: thirdyear,
-                      ),
-                      )
-                  );
-                },
-              ),
-              GestureDetector(
-                  child: _buildCategoryProduct("assets/images/books.png"),
-                onTap: (){
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (ctx)=>ListProduct(name: "Fourth Year",
-                        snapShot: fourthyear,
-                      ),
-                      )
-                  );
-                },
-              ),
+              children: [
+                _buildFirstYearIcon(),
+                _buildSecondYearIcon(),
+                _buildThirdYearIcon(),
+                _buildFourthYearIcon(),
               ],
             ),
         )
@@ -396,12 +484,18 @@ class _HomePage1State extends State<HomePage1> {
     provider.getsecondyeardata();
     provider.getthirdyeardata();
     provider.getfourthyeardata();
+    provider.getfirstyearIcondata();
 
     productProvider= Provider.of<ProductProvider>(context);
     productProvider.getfeaturedata();
     productProvider.getnewArchivesdata();
     productProvider.getHomeFeaturedata();
     productProvider.gethomeArchivesdata();
+    productProvider.getUserData();
+
+    provider.getsecondyearIconData();
+    provider.getthirdyearIconData();
+    provider.getfourthyearIconData();
 
     return Scaffold(
       key: _key,
@@ -415,13 +509,13 @@ class _HomePage1State extends State<HomePage1> {
               },);
           }
         ),
-        title: const Text("Book  Buddy", style: TextStyle(fontWeight: FontWeight.bold,color: Colors.purple),),
+        title:const Text("Book  Buddy", style: TextStyle(fontWeight: FontWeight.bold,color: Colors.purple),),
         centerTitle: true,
         elevation: 0.0,
         actions: const <Widget>[
 
           IconButton(onPressed: null, icon: Icon(Icons.search)),
-          IconButton(onPressed: null, icon: Icon(Icons.notifications)),
+          NotificationButton(),
         ],
       ),
        body:
@@ -440,7 +534,7 @@ class _HomePage1State extends State<HomePage1> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       _buildImageSlider(),
-                                      _buildCategory(context),
+                                      _buildCategory(),
                                       const SizedBox(
                                         height: 20,
                                       ),

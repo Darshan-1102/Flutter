@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:demo/models/categoryicons.dart';
 import 'package:demo/store/product.dart';
 import 'package:flutter/material.dart';
 class CategoryProvider with ChangeNotifier{
@@ -14,6 +15,103 @@ class CategoryProvider with ChangeNotifier{
 
   List<Product> fourthyear=[];
   late Product fourthyeardata;
+
+  List<CategoryIcon> firstyearIcon= [];
+  late CategoryIcon firstyearIconData;
+
+  Future<void> getfirstyearIcondata() async {
+
+    List<CategoryIcon> newList=[];
+    QuerySnapshot firstyearSnapShot= await FirebaseFirestore.instance.collection('categotyicon').
+        doc('mK3DUNQYG5DDAHTM7kcx')
+        .collection('firstyear').get();
+    firstyearSnapShot.docs.forEach((element) {
+      firstyearIconData= CategoryIcon(
+          image: element.get("image"),
+
+      );
+      newList.add(firstyearIconData);
+    },
+    );
+    firstyearIcon=newList;
+    //notifyListeners();
+  }
+  List<CategoryIcon> get getfirstyearIcon{
+    return firstyearIcon;
+  }
+
+  List<CategoryIcon> secondyearIcon=[];
+  late CategoryIcon secondyearIconData;
+  Future<void> getsecondyearIconData() async {
+
+    List<CategoryIcon> newList=[];
+    QuerySnapshot secondyearSnapShot= await FirebaseFirestore.instance.collection('categotyicon').
+    doc('mK3DUNQYG5DDAHTM7kcx')
+        .collection('secondyear').get();
+    secondyearSnapShot.docs.forEach((element) {
+      secondyearIconData= CategoryIcon(
+        image: element.get("image"),
+      );
+
+      newList.add(secondyearIconData);
+    },
+    );
+    secondyearIcon=newList;
+    //notifyListeners();
+  }
+  List<CategoryIcon> get getsecondyearIcon{
+    return secondyearIcon;
+  }
+
+
+
+  List<CategoryIcon> thirdyearIcon=[];
+  late CategoryIcon thirdyearIconData;
+  Future<void> getthirdyearIconData() async {
+
+    List<CategoryIcon> newList=[];
+    QuerySnapshot thirdyearSnapShot= await FirebaseFirestore.instance.collection('categotyicon').
+    doc('mK3DUNQYG5DDAHTM7kcx')
+        .collection('thirdyear').get();
+    thirdyearSnapShot.docs.forEach((element) {
+      thirdyearIconData= CategoryIcon(
+        image: element.get("image"),
+      );
+
+      newList.add(thirdyearIconData);
+    },
+    );
+    thirdyearIcon=newList;
+    //notifyListeners();
+  }
+  List<CategoryIcon> get getthirdyearIcon{
+    return thirdyearIcon;
+  }
+
+
+  List<CategoryIcon> fourthyearIcon=[];
+  late CategoryIcon fourthyearIconData;
+  Future<void> getfourthyearIconData() async {
+
+    List<CategoryIcon> newList=[];
+    QuerySnapshot fourthyearSnapShot= await FirebaseFirestore.instance.collection('categotyicon').
+    doc('mK3DUNQYG5DDAHTM7kcx')
+        .collection('fourthyear').get();
+    fourthyearSnapShot.docs.forEach((element) {
+      fourthyearIconData= CategoryIcon(
+        image: element.get("image"),
+      );
+
+      newList.add(fourthyearIconData);
+    },
+    );
+    fourthyearIcon=newList;
+    //notifyListeners();
+  }
+  List<CategoryIcon> get getfourthyearIcon{
+    return fourthyearIcon;
+  }
+
 
   Future<void> getfirstyeardata() async {
 
@@ -31,7 +129,7 @@ class CategoryProvider with ChangeNotifier{
       },
     );
     firstyear=newList;
-    notifyListeners();
+    //notifyListeners();
   }
     List<Product> get getfirstyearList{
       return firstyear;
@@ -55,7 +153,7 @@ class CategoryProvider with ChangeNotifier{
       },
     );
       secondyear=newList;
-    notifyListeners();
+    //notifyListeners();
     }
         List<Product> get getsecondyearList{
           return secondyear;
@@ -79,7 +177,7 @@ class CategoryProvider with ChangeNotifier{
     },
     );
     thirdyear=newList;
-    notifyListeners();
+    //notifyListeners();
   }
   List<Product> get getthirdyearList{
     return thirdyear;
@@ -102,7 +200,7 @@ class CategoryProvider with ChangeNotifier{
     },
     );
     fourthyear=newList;
-    notifyListeners();
+    //notifyListeners();
   }
   List<Product> get getfourthyearList{
     return fourthyear;

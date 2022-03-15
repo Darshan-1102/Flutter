@@ -1,8 +1,12 @@
 import 'package:demo/pages/home_page1.dart';
-import 'package:demo/screens/cartpage1.dart';
-import 'package:demo/widgets/themes.dart';
+import 'package:demo/screens/checkout.dart';
+import 'package:demo/widgets/notification_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../provider/product_provider.dart';
+import 'package:provider/provider.dart';
+
+import 'cartpage1.dart';
 
 class DetailPage1 extends StatefulWidget{
   final String image;
@@ -16,6 +20,8 @@ class DetailPage1 extends StatefulWidget{
 }
 
 class _DetailPage1State extends State<DetailPage1> {
+  int count=1;
+  late ProductProvider productProvider;
 
   Widget _buildImage(){
     return Center(
@@ -139,11 +145,11 @@ class _DetailPage1State extends State<DetailPage1> {
       height: 60,
       width: double.infinity,
       child: ElevatedButton(onPressed: (){
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (ctx)=> CartPage1(
-            price: widget.price, name: widget.name, image: widget.image
-        )
-        )
+        productProvider.getCartData(name: widget.name, price: widget.price, image: widget.image,
+          quantity: count
+        );
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=> CartPage1()
+          )
         );
       },
         child: const Text("Check Out"),
@@ -159,9 +165,9 @@ class _DetailPage1State extends State<DetailPage1> {
 
 
 
-  int count=1;
   @override
   Widget build(BuildContext context) {
+    productProvider= Provider.of<ProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Book Buddy",
@@ -173,9 +179,8 @@ class _DetailPage1State extends State<DetailPage1> {
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=> HomePage1()));
           },
         ),
-        actions: [
-          IconButton(icon: const Icon(Icons.notifications, color: Colors.black,),
-            onPressed: (){},)
+        actions: const [
+          NotificationButton(),
         ],
       ),
       body: ListView(

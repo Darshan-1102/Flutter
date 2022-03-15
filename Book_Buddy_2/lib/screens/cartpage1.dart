@@ -1,99 +1,23 @@
 import 'package:demo/pages/home_page1.dart';
+import 'package:demo/provider/product_provider.dart';
 import 'package:demo/screens/checkout.dart';
+import 'package:demo/widgets/cartsingleproduct.dart';
+import 'package:demo/widgets/notification_button.dart';
 import 'package:demo/widgets/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:provider/provider.dart';
 
 class CartPage1 extends StatefulWidget{
-  final int price;
-  final String name;
-  final String image;
-
-  const CartPage1({Key? key, required this.price, required this.name, required this.image}) : super(key: key);
-
-  @override
+   @override
   State<CartPage1> createState() => _CartPage1State();
 }
 
+late ProductProvider productProvider;
 class _CartPage1State extends State<CartPage1> {
-  int count=1;
 
-  Widget _buildSingleCartProduct(){
-    return Container(
-      height: 150,
-      width: double.infinity,
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  height: 130,
-                  width: 150,
-                  decoration:  BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.fitHeight,
-                          image: NetworkImage(widget.image)
-                      )
-                  ),
-                ),
-                Container(
-                  height: 140,
-                  width: 200,
-                  child: ListTile(
-                      title: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(widget.name,
-                            style: const TextStyle(color: Colors.black),
-                          ),
-                          const Text("Books"),
-                          Text("₹ ${widget.price.toString()}"),
-                          Container(
-                            height: 30,
-                            width: 100,
-                            color: Colors.lightBlueAccent,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                GestureDetector(
-                                  child: const Icon(Icons.remove),
-                                  onTap: (){
-                                    setState(() {
-                                      if(count>1) {
-                                        count--;
-                                      }
-                                    });
-                                  },
-                                ),
-                                Text(count.toString(), style: const TextStyle(fontSize: 15),),
-                                GestureDetector(
-                                  child: const Icon(Icons.add),
-                                  onTap: (){
-                                    setState(() {
-                                      count++;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      )
-                  ),
-                )
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
   @override
   Widget build(BuildContext context) {
+    productProvider= Provider.of<ProductProvider>(context);
     return Scaffold(
       bottomNavigationBar: Container(
         height: 70,
@@ -105,10 +29,9 @@ class _CartPage1State extends State<CartPage1> {
             primary: Colors.purple
           ),
           onPressed: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>CheckOut(
-                price: widget.price, name: widget.name, image: widget.image)
-            )
-            );
+            productProvider.addNotification("Notification");
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=> CheckOut()));
+
           },
           child: const Text("Continue",
             style: TextStyle(
@@ -131,20 +54,20 @@ class _CartPage1State extends State<CartPage1> {
             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=> HomePage1()));
           },
         ),
-        actions: [
-          IconButton(icon: const Icon(Icons.notifications, color: Colors.black,),
-            onPressed: (){},)
+        actions: const [
+          NotificationButton()
         ],
       ),
-      body: ListView(
-        children: [
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct()
-        ],
+      body: ListView.builder(
+        itemCount: productProvider.getCartModalListLength,
+        itemBuilder: (ctx, index)=> CartSingleProduct(
+            isCheckOutPage: false,
+            name: productProvider.getCartModalList[index].name,
+            image: productProvider.getCartModalList[index].image,
+            quantity: productProvider.getCartModalList[index].quantity,
+            price: productProvider.getCartModalList[index].price,
+            index: index
+        ),
       ),
 
     );
