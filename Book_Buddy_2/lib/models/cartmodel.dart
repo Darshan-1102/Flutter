@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CartModal{
-   String name;
-  String image;
-   int price;
-   int quantity;
+   final String name;
+  final String image;
+   final int price;
+   final int quantity;
 
-  CartModal(this.name, this.image, this.price, this.quantity);
+  CartModal({required this.name, required this.image, required this.price, required this.quantity});
 }

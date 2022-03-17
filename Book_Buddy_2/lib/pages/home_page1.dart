@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo/models/categoryicons.dart';
 import 'package:demo/provider/categoty_provider.dart';
 import 'package:demo/provider/product_provider.dart';
@@ -7,10 +6,10 @@ import 'package:demo/screens/detailpage1.dart';
 import 'package:demo/screens/listproduct.dart';
 import 'package:demo/screens/profilescreen.dart';
 import 'package:demo/screens/singleproduct.dart';
+import 'package:demo/store/search_category.dart';
 import 'package:demo/widgets/notification_button.dart';
 import 'package:demo/widgets/themes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:provider/provider.dart';
@@ -214,7 +213,7 @@ class _HomePage1State extends State<HomePage1> {
           onTap: (){
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (ctx)=>ListProduct(name: "First Year",
-                  snapShot: firstyear,
+                  snapShot: firstyear, isCategory: true,
                 ),
                 )
             );
@@ -234,7 +233,7 @@ class _HomePage1State extends State<HomePage1> {
           onTap: (){
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (ctx)=>ListProduct(name: "Second Year",
-                  snapShot: secondyear,
+                  snapShot: secondyear, isCategory: true,
                 ),
                 )
             );
@@ -254,7 +253,7 @@ class _HomePage1State extends State<HomePage1> {
           onTap: (){
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (ctx)=>ListProduct(name: "Third Year",
-                  snapShot: thirdyear,
+                  snapShot: thirdyear, isCategory: true,
                 ),
                 )
             );
@@ -274,7 +273,7 @@ class _HomePage1State extends State<HomePage1> {
           onTap: (){
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (ctx)=>ListProduct(name: "Fourth Year",
-                  snapShot: fourthyear,
+                  snapShot: fourthyear, isCategory: true,
                 ),
                 )
             );
@@ -328,7 +327,7 @@ class _HomePage1State extends State<HomePage1> {
                       Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (ctx) =>
                               ListProduct(name: "Featured",
-                                snapShot: featureProduct,
+                                snapShot: featureProduct, isCategory: false,
                               ),
                           )
                       );
@@ -410,8 +409,10 @@ class _HomePage1State extends State<HomePage1> {
                           onTap: () {
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(builder: (ctx) =>
-                                    ListProduct(name: "New Archives",
-                                        snapShot: newArchivesProduct
+                                    ListProduct(
+                                        name: "New Archives",
+                                        snapShot: newArchivesProduct,
+                                      isCategory: false,
                                     )));
                           },
                           child: const Text("View More")),
@@ -512,10 +513,13 @@ class _HomePage1State extends State<HomePage1> {
         title:const Text("Book  Buddy", style: TextStyle(fontWeight: FontWeight.bold,color: Colors.purple),),
         centerTitle: true,
         elevation: 0.0,
-        actions: const <Widget>[
+        actions:  <Widget>[
 
-          IconButton(onPressed: null, icon: Icon(Icons.search)),
-          NotificationButton(),
+          IconButton(onPressed: (){
+            showSearch(context: context, delegate: SearchCategory());
+          },
+              icon: const Icon(Icons.search)),
+          const NotificationButton(),
         ],
       ),
        body:

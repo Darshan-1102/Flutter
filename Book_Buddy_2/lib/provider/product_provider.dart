@@ -56,7 +56,7 @@ class ProductProvider with ChangeNotifier{
   void getCheckOutData(
       {required int quantity, required int price, required String name, required String image})
   {
-    checkOutModal= CartModal(name, image, price, quantity);
+    checkOutModal= CartModal(name: name, image: image, price: price, quantity: quantity);
     checkOutModalList.add(checkOutModal);
   }
 
@@ -70,7 +70,7 @@ class ProductProvider with ChangeNotifier{
 
 
   void getCartData({required String name, required String image, required int price, required int quantity}) {
-   cartModal= CartModal(name, image, price, quantity);
+   cartModal= CartModal(name: name, image: image,price: price,quantity:  quantity);
    cartModalList.add(cartModal);
 
   }
@@ -81,6 +81,10 @@ class ProductProvider with ChangeNotifier{
 
   int get getCartModalListLength{
     return cartModalList.length;
+  }
+  void clearCartProduct(){
+    cartModalList.clear();
+    notifyListeners();
   }
 
 
@@ -186,5 +190,21 @@ class ProductProvider with ChangeNotifier{
   int get getNotificationIndex{
     return notificationList.length;
   }
+
+
+  late List<Product> searchList;
+  void getSearchList({required List<Product> list}){
+    searchList= list;
+  }
+
+  List<Product> searchProductList(String query){
+    List<Product> searchFirstYear= searchList.where((element){
+      return element.name.toUpperCase().contains(query)||element.name.toLowerCase().contains(query);
+    }).toList();
+    return searchFirstYear;
+  }
+
+
+
 
  }

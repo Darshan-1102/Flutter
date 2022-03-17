@@ -206,4 +206,44 @@ class CategoryProvider with ChangeNotifier{
     return fourthyear;
   }
 
+  late List<Product> searchList;
+  void getSearchList({required List<Product> list}){
+    searchList= list;
+  }
+
+  List<Product> searchCategoryList(String query){
+    List<Product> searchFirstYear= searchList.where((element){
+      return element.name.toUpperCase().contains(query)||element.name.toLowerCase().contains(query);
+    }).toList();
+    return searchFirstYear;
+  }
+
+  List<Product> searchFirstYearList(String query){
+    List<Product> searchFirstYear= firstyear.where((element){
+      return element.name.toUpperCase().contains(query)||element.name.toLowerCase().contains(query);
+    }).toList();
+    return searchFirstYear;
+  }
+
+  List<Product> searchSecondYearList(String query){
+    List<Product> searchFirstYear= secondyear.where((element){
+      return element.name.toUpperCase().contains(query)||element.name.toLowerCase().contains(query);
+    }).toList();
+    return searchFirstYear;
+  }
+
+  List<Product> searchThirdYearList(String query){
+    List<Product> searchFirstYear= thirdyear.where((element){
+      return element.name.toUpperCase().contains(query)||element.name.toLowerCase().contains(query);
+    }).toList();
+    return searchFirstYear;
+  }
+
+  List<Product> searchFourthYearList(String query){
+    List<Product> searchFirstYear= fourthyear.where((element){
+      return element.name.toUpperCase().contains(query)||element.name.toLowerCase().contains(query);
+    }).toList();
+    return searchFirstYear;
+  }
+
 }

@@ -1,16 +1,24 @@
 import 'package:demo/pages/home_page1.dart';
+import 'package:demo/provider/categoty_provider.dart';
+import 'package:demo/provider/product_provider.dart';
+import 'package:demo/screens/search_product.dart';
 import 'package:demo/screens/singleproduct.dart';
 import 'package:demo/store/product.dart';
+import 'package:demo/store/search_category.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ListProduct extends StatelessWidget{
   final String name;
+  bool isCategory=true;
   final List<Product>snapShot;
-  ListProduct({required this.name, required this.snapShot});
+  ListProduct({required this.name, required this.isCategory, required this.snapShot});
 
 
   @override
   Widget build(BuildContext context) {
+    CategoryProvider categoryProvider= Provider.of<CategoryProvider>(context);
+    ProductProvider productProvider= Provider.of<ProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -18,12 +26,25 @@ class ListProduct extends StatelessWidget{
         leading: IconButton(icon: const Icon(Icons.arrow_back),color: Colors.black,onPressed: (){
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=> HomePage1()));
         }),
-        actions: [
+        actions: <Widget>[
+          isCategory==true?
           IconButton(
             icon: const Icon(Icons.search),
             color: Colors.black,
-            onPressed: (){},
+            onPressed: (){
+              categoryProvider.getSearchList(list: snapShot);
+              showSearch(context: context, delegate: SearchCategory());
+            },
+          ):
+          IconButton(
+            icon: const Icon(Icons.search),
+            color: Colors.black,
+            onPressed: (){
+              productProvider.getSearchList(list: snapShot);
+              showSearch(context: context, delegate: SearchProduct());
+            },
           ),
+
           IconButton(
             icon: const Icon(Icons.notifications_none),
             color: Colors.black,
