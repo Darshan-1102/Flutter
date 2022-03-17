@@ -29,7 +29,7 @@ class _CartSingleProductState extends State<CartSingleProduct> {
   @override
   Widget build(BuildContext context) {
     productProvider= Provider.of<ProductProvider>(context);
-    // productProvider.getCheckOutData(
+    // productProvider.getCartData(
     //     quantity: widget.quantity,
     //     price: widget.price,
     //     name: widget.name,
